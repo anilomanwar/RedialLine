@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="UTF-8" />
+
+
+        
+      
+<title>  :: Redial Line Chart :: </title>		
+  </head>
+    <body>
+	
+
+	
+			
+			<div style="margin:20px auto;width:300px" id="rcharts" >   <h1> :: Redial Line Chart :: </h1>
+			This is simple redial line chart created by taking random music album facebook name with random count.
+			
+			</div>
+		    <script src="http://d3js.org/d3.v3.min.js"></script>
+		
+             <style>
+			 body{
+	font-family: 'Open Sans Condensed','Arial Narrow', serif;
+	background: #ddd url(../images/egg_shell.jpg) repeat top left;
+	font-weight: 400;
+	font-size: 15px;
+	color: #333;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+			 </style>
+		
+		<script type="text/javascript">
+			var dt = [{"term":"Zombieland","count":9},{"term":"Wieners","count":8},{"term":"Toy Story","count":8},{"term":"trashkannon","count":7},{"term":"the GROWLERS","count":6},{"term":"mudweiser","count":6},{"term":"ThunderCats","count":4},{"term":"The Taqwacores - Motion Picture","count":4},{"term":"The Shawshank Redemption","count":2},{"term":"The Olivia Experiment","count":1}];
+			var types=[{name:"Music",color : "#009999",dcolor:"#006666"}];
+
+				var width = 300,
+					height = 300,
+					twoPi = 2 * Math.PI,
+					progress = 0,
+					total = 1308573, // must be hard-coded if server doesn't report Content-Length
+					formatPercent = d3.format(".0%");
+				var svg = d3.select("#rcharts").append("svg")
+					.attr("width", width)
+					.attr("height", height)
+				  .append("g")
+					.attr("transform", "translate(" + width / 10 + "," + height / 10 + ")");
+
+					var baseRad=4, cgap=12,maxVal=11;
+					
+				var cx1=100,cy1=150,el="p0",cl="c0",ind=0,rad;
+				
+			rad=baseRad;
+				 svg.selectAll(".p0")
+					.data(dt)
+					.enter()
+					.append("path")
+					.each(ringEnter);
+					rad=baseRad; 
+				svg.selectAll(".C0").data(dt)
+					.enter()
+					.append("circle")
+					.each(cEnter);
+					
+				var txtxas= svg.selectAll(".txC0").data(dt)
+					.enter()
+					.append("svg:text")
+					  .attr("class", "Today")
+					  .style("font-size", "11px")
+					   .style("font-family", "calibri")
+					   .style("fill",types[ind].dcolor)
+					   .attr("transform", function(d, i) { var xx=cx1-3; return "translate("+xx+","+(dt.length*(cgap-2)-((cgap)*i))+")"; })
+					   .attr("text-anchor", "end")
+					   .text( function(d, i) {  return getSnip(d.term,31) });
+
+				txtxas.append("title")
+					  .text(function(d) { return d.term+" ("+d.count+")"; });
+					  
+					  svg.append("svg:text")
+					  .attr("class", "Today")
+					  .style("font-size", "26px")
+					  .style("fill",types[ind].dcolor)
+					  .style("font-family", "Iceland")
+					   .attr("transform", function(d, i) { return "translate("+(cx1-30)+","+(cy1+8)+")"; })
+						.text(types[ind].name);
+				
+				function ringEnter(d, i) {
+						 
+						 var ratio = d.count/maxVal;
+						 var arc = d3.svg.arc().startAngle(0).innerRadius(5+cgap*rad).outerRadius(5+cgap*rad+1).endAngle(twoPi*ratio);
+						 d3.select(this)
+							 .attr("transform", "translate(" + cx1 + "," + cy1+ ")")
+							 .attr("class",el)
+							 .attr("d", arc)
+							 .style("fill",types[ind].color);	 
+					   rad++;
+						}
+						
+					function cEnter(d, i) {
+						 
+						 var ratio = d.count/maxVal;
+						// console.log(ratio);
+						 d3.select(this)
+							  .attr("transform", "translate(" + cx1 + "," + cy1 + ")")
+							  .attr("class",cl)
+							  .attr("cx",function(d,i) { return  (5+cgap*rad)*Math.cos(twoPi*ratio-twoPi/4);})
+							  .attr("cy",function(d,i) { return  (5+cgap*rad)*Math.sin(twoPi*ratio-twoPi/4);})
+							  .style("fill",types[ind].dcolor)
+							  .attr("r", 3);
+						   rad++;
+						}
+				
+
+
+				function getSnip(text, len)
+				{
+				  if(text.length > len)
+					return text.substring(0,len) +"..";
+				  else
+				  return text;
+				}
+
+			
+					
+			
+		</script>
+
+		
+	
+<pre style="width:960px;margin:10px auto;border:1px solid #aaa; height:400px;overflow:auto;background-color:#FFFFCC">
+<h1> #index.html </h1>
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot; /&gt;
+     
+&lt;title&gt;  :: Redial Line Chart :: &lt;/title&gt;  
+ &lt;/head&gt;
+&lt;body&gt;
+ &lt;div style=&quot;margin:20px auto;width:300px&quot; id=&quot;rcharts&quot; &gt;   &lt;h1&gt; :: Redial Line Chart :: &lt;/h1&gt;&lt;/div&gt;
+&lt;script src=&quot;http://d3js.org/d3.v3.min.js&quot;&gt;&lt;/script&gt;
+&lt;style&gt;
+    body{
+ font-family: 'Open Sans Condensed','Arial Narrow', serif;
+ background: #ddd url(../images/egg_shell.jpg) repeat top left;
+ font-weight: 400;
+ font-size: 15px;
+ color: #333;
+ overflow: scroll;
+ overflow-x: hidden;
+}
+    &lt;/style&gt;
+  
+  &lt;script type=&quot;text/javascript&quot;&gt;
+   var dt = [{&quot;term&quot;:&quot;Zombieland&quot;,&quot;count&quot;:9},
+			{&quot;term&quot;:&quot;Wieners&quot;,&quot;count&quot;:8},
+			{&quot;term&quot;:&quot;Toy Story&quot;,&quot;count&quot;:8},
+			{&quot;term&quot;:&quot;trashkannon&quot;,&quot;count&quot;:7},
+			{&quot;term&quot;:&quot;the GROWLERS&quot;,&quot;count&quot;:6},
+			{&quot;term&quot;:&quot;mudweiser&quot;,&quot;count&quot;:6},
+			{&quot;term&quot;:&quot;ThunderCats&quot;,&quot;count&quot;:4},
+			{&quot;term&quot;:&quot;The Taqwacores - Motion Picture&quot;,&quot;count&quot;:4},
+			{&quot;term&quot;:&quot;The Shawshank Redemption&quot;,&quot;count&quot;:2},
+			{&quot;term&quot;:&quot;The Olivia Experiment&quot;,&quot;count&quot;:1}];
+   var types=[{name:&quot;Music&quot;,color : &quot;#009999&quot;,dcolor:&quot;#006666&quot;}];
+
+    var width = 300,
+     height = 450,
+     twoPi = 2 * Math.PI,
+     progress = 0,
+     total = 1308573, // must be hard-coded if server doesn't report Content-Length
+     formatPercent = d3.format(&quot;.0%&quot;);
+    var svg = d3.select(&quot;#rcharts&quot;).append(&quot;svg&quot;)
+     .attr(&quot;width&quot;, width)
+     .attr(&quot;height&quot;, height)
+      .append(&quot;g&quot;)
+     .attr(&quot;transform&quot;, &quot;translate(&quot; + width / 10 + &quot;,&quot; + height / 10 + &quot;)&quot;);
+
+     var baseRad=4, cgap=12,maxVal=11;
+     
+    var cx1=100,cy1=150,el=&quot;p0&quot;,cl=&quot;c0&quot;,ind=0,rad;
+    
+   rad=baseRad;
+     svg.selectAll(&quot;.p0&quot;)
+     .data(dt)
+     .enter()
+     .append(&quot;path&quot;)
+     .each(ringEnter);
+     rad=baseRad; 
+    svg.selectAll(&quot;.C0&quot;).data(dt)
+     .enter()
+     .append(&quot;circle&quot;)
+     .each(cEnter);
+     
+    var txtxas= svg.selectAll(&quot;.txC0&quot;).data(dt)
+     .enter()
+     .append(&quot;svg:text&quot;)
+       .attr(&quot;class&quot;, &quot;Today&quot;)
+       .style(&quot;font-size&quot;, &quot;11px&quot;)
+        .style(&quot;font-family&quot;, &quot;calibri&quot;)
+        .style(&quot;fill&quot;,types[ind].dcolor)
+        .attr(&quot;transform&quot;, function(d, i) 
+		{ var xx=cx1-3; 
+		return &quot;translate(&quot;+xx+&quot;,&quot;+(dt.length*(cgap-2)-((cgap)*i))+&quot;)&quot;; 
+		})
+        .attr(&quot;text-anchor&quot;, &quot;end&quot;)
+        .text( function(d, i) {  return getSnip(d.term,31) });
+
+    txtxas.append(&quot;title&quot;)
+       .text(function(d) { return d.term+&quot; (&quot;+d.count+&quot;)&quot;; });
+       
+       svg.append(&quot;svg:text&quot;)
+       .attr(&quot;class&quot;, &quot;Today&quot;)
+       .style(&quot;font-size&quot;, &quot;26px&quot;)
+       .style(&quot;fill&quot;,types[ind].dcolor)
+       .style(&quot;font-family&quot;, &quot;Iceland&quot;)
+        .attr(&quot;transform&quot;, function(d, i) 
+		{ 
+		return &quot;translate(&quot;+(cx1-30)+&quot;,&quot;+(cy1+8)+&quot;)&quot;; 
+		})
+      .text(types[ind].name);
+    
+    function ringEnter(d, i) {
+       
+       var ratio = d.count/maxVal;
+       var arc = d3.svg.arc().startAngle(0).innerRadius(5+cgap*rad).
+	   outerRadius(5+cgap*rad+1).endAngle(twoPi*ratio);
+       d3.select(this)
+        .attr(&quot;transform&quot;, &quot;translate(&quot; + cx1 + &quot;,&quot; + cy1+ &quot;)&quot;)
+        .attr(&quot;class&quot;,el)
+        .attr(&quot;d&quot;, arc)
+        .style(&quot;fill&quot;,types[ind].color);  
+        rad++;
+      }
+      
+     function cEnter(d, i) {
+       
+       var ratio = d.count/maxVal;
+      // console.log(ratio);
+       d3.select(this)
+         .attr(&quot;transform&quot;, &quot;translate(&quot; + cx1 + &quot;,&quot; + cy1 + &quot;)&quot;)
+         .attr(&quot;class&quot;,cl)
+         .attr(&quot;cx&quot;,function(d,i) { return  (5+cgap*rad)*Math.cos(twoPi*ratio-twoPi/4);})
+         .attr(&quot;cy&quot;,function(d,i) { return  (5+cgap*rad)*Math.sin(twoPi*ratio-twoPi/4);})
+         .style(&quot;fill&quot;,types[ind].dcolor)
+         .attr(&quot;r&quot;, 3);
+         rad++;
+      }
+	  function getSnip(text, len)
+    {
+      if(text.length &gt; len)
+     return text.substring(0,len) +&quot;..&quot;;
+      else
+      return text;
+    }  
+  &lt;/script&gt;
+ &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+	
+  <H4 style="float:right;margin-right:200px"> Created by : <a href="http://www.linkedin.com/profile/view?id=10603162"> Anil Omanwar</a> </h4>
+	</body>
+</html>
